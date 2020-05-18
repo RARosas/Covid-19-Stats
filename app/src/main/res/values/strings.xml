@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">Covid-19</string>
+    <string name="app_subname">Stats</string>
+    <string name="select_country">Select Country</string>
+
+    <string name="updatedTitle">Updated</string>
+    <string name="countryTitle">Country</string>
+    <string name="casesTitle">Cases</string>
+    <string name="todayCasesTitle">Today Cases</string>
+    <string name="deathsTitle">Deaths</string>
+    <string name="todayDeathsTitle">Today Deaths</string>
+    <string name="recoveredTitle">Recovered</string>
+    <string name="activeTitle">Active</string>
+    <string name="criticalTitle">Critical</string>
+    <string name="testsTitle">Tests</string>
+    <string name="zero">0</string>
+</resources>
