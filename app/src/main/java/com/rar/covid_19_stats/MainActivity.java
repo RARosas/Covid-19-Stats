@@ -19,6 +19,8 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.InterstitialAd;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -37,6 +39,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     private static final String HTTP_ALL = "https://corona.lmao.ninja/v2/countries?yesterday&sort";
     Spinner spinner;
     TextView updated, country, cases, todaycases, deaths, todaydeaths, recovered, active, critical, tests;
+    private InterstitialAd interstitialAd;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,6 +84,10 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         active = findViewById(R.id.active_description);
         critical = findViewById(R.id.critical_description);
         tests = findViewById(R.id.tests_description);
+
+        interstitialAd = new InterstitialAd(this);
+        interstitialAd.setAdUnitId("ca-app-pub-1973904236551556/6575416676");
+        interstitialAd.loadAd(new AdRequest.Builder().build());
     }
 
     public void desSerializeJSON (JSONArray object) {
@@ -116,19 +123,22 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        Date date = new Date(paises.get(position).getUpdated());
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-        String fecha = dateFormat.format(date);
-        updated.setText(fecha);
-        country.setText(paises.get(position).getCountry());
-        cases.setText(String.valueOf(paises.get(position).getCases()));
-        todaycases.setText(String.valueOf(paises.get(position).getTodayCases()));
-        deaths.setText(String.valueOf(paises.get(position).getDeaths()));
-        todaydeaths.setText(String.valueOf(paises.get(position).getTodayCases()));
-        recovered.setText(String.valueOf(paises.get(position).getRecovered()));
-        active.setText(String.valueOf(paises.get(position).getActive()));
-        critical.setText(String.valueOf(paises.get(position).getCritical()));
-        tests.setText(String.valueOf(paises.get(position).getTests()));
+        if(interstitialAd.isLoaded())   {
+            interstitialAd.show();
+            Date date = new Date(paises.get(position).getUpdated());
+            SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+            String fecha = dateFormat.format(date);
+            updated.setText(fecha);
+            country.setText(paises.get(position).getCountry());
+            cases.setText(String.valueOf(paises.get(position).getCases()));
+            todaycases.setText(String.valueOf(paises.get(position).getTodayCases()));
+            deaths.setText(String.valueOf(paises.get(position).getDeaths()));
+            todaydeaths.setText(String.valueOf(paises.get(position).getTodayCases()));
+            recovered.setText(String.valueOf(paises.get(position).getRecovered()));
+            active.setText(String.valueOf(paises.get(position).getActive()));
+            critical.setText(String.valueOf(paises.get(position).getCritical()));
+            tests.setText(String.valueOf(paises.get(position).getTests()));
+        }
     }
 
     @Override
